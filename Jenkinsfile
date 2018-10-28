@@ -1,5 +1,6 @@
 pipeline {
     agent any
+ 
     tools {
         maven 'localMaven'
     }
@@ -11,14 +12,13 @@ pipeline {
             post {
                 success {
                     echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/*.war'
+                    archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage('Deploy to staging'){
+        stage ('Deploy to Staging'){
             steps {
-                build job:{ 'staging'
-                }
+                build job: 'Deploy-to-staging'
             }
         }
     }
